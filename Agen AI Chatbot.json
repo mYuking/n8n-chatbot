@@ -1,0 +1,119 @@
+{
+  "name": "Agen AI Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dc59c7e4-d697-40e3-bab7-1422e78e12d4",
+      "name": "When chat message received",
+      "webhookId": "0284615c-dffa-4da0-a5ae-ad4ad1d45096"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah chatbot yang membantu mahasiswa mengelola keuangan bulanan.\n\nTugas kamu:\n- Menjawab pertanyaan tentang keuangan mahasiswa\n- Memberikan tips hemat\n- Memberikan solusi sederhana dan jelas\n\nGunakan bahasa santai dan mudah dipahami."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "fd662b91-11ea-4d72-909a-f62df158654e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        48,
+        256
+      ],
+      "id": "c8c973b4-32d1-45be-934c-c28424166854",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Jl3a673u1A5NN4VL",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        272
+      ],
+      "id": "29f52a92-5306-4bd7-9e14-3497c5d0c0e8",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "00d3d9d4-71ea-4bfe-8fef-a56bc43f61f5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "09d7f27ef33aaa596b96856ba849b4e97da2ac1f510c0e54b31c7676f9f9e70c"
+  },
+  "id": "X843iF7lUSDiagSm",
+  "tags": []
+}
